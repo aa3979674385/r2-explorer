@@ -34,6 +34,11 @@ jobs:
       - name: Build worker
         run: cd packages/worker && npx tsup src/index.ts --format cjs,esm
 
+      - name: Create worker entry
+        run: |
+          cd packages/worker
+          printf 'import { R2Explorer } from "./dist/index.mjs";\nexport default { fetch(request, env, ctx) { return R2Explorer({ readonly: false }).fetch(request, env, ctx); } };\n' > entry.mjs
+
       - name: Deploy to Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
