@@ -1,11 +1,8 @@
 name = "r2-explorer"
 main = "dist/index.mjs"
 compatibility_date = "2024-11-06"
-assets = { directory = "dashboard", binding = "ASSETS", html_handling = "auto-trailing-slash", not_found_handling = "single-page-application", run_worker_first = ["/api/*", "/share/*"] }
 workers_dev = true
 
-# R2 Buckets - add your buckets here before deploying, or edit in Cloudflare dashboard after deploy
-# Example:
-# [[r2_buckets]]
-# binding = "my-files"
-# bucket_name = "my-files"
+[[r2_buckets]]
+binding = "zyzy-1"
+bucket_name = "zyzy-1"
