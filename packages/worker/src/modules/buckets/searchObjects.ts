@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { ChanfanaSchemaParam } from "chanfana";
+import { OpenAPIRoute } from "chanfana";
 import type { AppContext } from "../../types";
 import { getIndex, type IndexEntry } from "./indexManager";
 
-export class SearchObjects extends ChanfanaSchemaParam {
+export class SearchObjects extends OpenAPIRoute {
 	schema = {
 		request: {
 			query: z.object({
@@ -38,7 +38,6 @@ export class SearchObjects extends ChanfanaSchemaParam {
 				entry.key.toLowerCase().includes(query),
 		);
 
-		// Sort
 		const sortOrder = data.query.sortOrder === "desc" ? -1 : 1;
 		switch (data.query.sortBy) {
 			case "name":
