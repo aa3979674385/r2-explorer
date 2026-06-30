@@ -1,8 +1,8 @@
-import { ChanfanaSchemaParam } from "chanfana";
+import { OpenAPIRoute } from "chanfana";
 import type { AppContext } from "../../types";
 import { getIndex, syncIndex } from "./indexManager";
 
-export class SyncIndex extends ChanfanaSchemaParam {
+export class SyncIndex extends OpenAPIRoute {
 	schema = {};
 
 	async handle(c: AppContext) {
