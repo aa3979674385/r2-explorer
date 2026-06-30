@@ -40,7 +40,7 @@ jobs:
           printf 'import { R2Explorer } from "./dist/index.mjs";\nexport default { fetch(request, env, ctx) { return R2Explorer({ readonly: false }).fetch(request, env, ctx); } };\n' > entry.mjs
 
       - name: Deploy to Cloudflare
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
