@@ -1,0 +1,81 @@
+<template>
+  <q-dialog v-model="modal" @hide="cancel">
+    <q-card style="min-width: 350px">
+      <q-form
+        @submit="onSubmit"
+      >
+        <q-card-section>
+          <div class="text-h6">{{ $t('files.newFolderName') }}</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="newFolderName" autofocus
+                   lazy-rules
+                   :rules="[ val => val && val.length > 0 || $t('files.pleaseTypeName')]" />
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat :label="$t('cancel')" v-close-popup />
+          <q-btn flat :label="$t('create')" type="submit" :loading="loading" />
+        </q-card-actions>
+      </q-form>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script>
+import { ROOT_FOLDER, apiHandler, decode } from "src/appUtils";
+import { useMainStore } from "stores/main-store";
+import { defineComponent } from "vue";
+
+export default defineComponent({
+	name: "CreateFolder",
+	data: () => ({
+		modal: false,
+		newFolderName: "",
+		loading: false,
+	}),
+	methods: {
+		cancel: function () {
+			this.modal = false;
+			this.newFolderName = "";
+			this.loading = false;
+		},
+		onSubmit: async function () {
+			this.loading = true;
+			await apiHandler.createFolder(
+				`${this.selectedFolder + this.newFolderName}/`,
+				this.selectedBucket,
+			);
+			this.$bus.emit("fetchFiles");
+			this.loading = false;
+			this.modal = false;
+			this.newFolderName = "";
+		},
+		open: function () {
+			this.modal = true;
+		},
+	},
+	computed: {
+		selectedBucket: function () {
+			return this.$route.params.bucket;
+		},
+		selectedFolder: function () {
+			if (
+				this.$route.params.folder &&
+				this.$route.params.folder !== ROOT_FOLDER
+			) {
+				return decode(this.$route.params.folder);
+			}
+			return "";
+		},
+	},
+	setup() {
+		const mainStore = useMainStore();
+
+		return {
+			mainStore,
+		};
+	},
+});
+</script>

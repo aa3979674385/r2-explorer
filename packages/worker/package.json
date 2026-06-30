@@ -1,0 +1,75 @@
+{
+	"name": "r2-explorer",
+	"version": "1.2.0",
+	"description": "A Google Drive Interface for your Cloudflare R2 Buckets",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dashboard",
+		"dist",
+		"docs",
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md"
+	],
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts && cp -R ../dashboard/dist/spa/ dashboard/ && cp ../../README.md . && cp ../../LICENSE . && mkdir -p docs/getting-started docs/guides && cp ../docs/index.md docs/ && cp ../docs/getting-started/*.md docs/getting-started/ && cp ../docs/guides/*.md docs/guides/",
+		"lint": "npx @biomejs/biome check src/ tests/ || (npx @biomejs/biome check --write src/ tests/; exit 1)",
+		"test": "tsc && npx vitest run --config tests/vitest.config.mts",
+		"package": "npm run build && npm pack",
+		"publint": "publint",
+		"publish-npm": "npm publish"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"keywords": [
+		"cloudflare",
+		"worker",
+		"workers",
+		"serverless",
+		"cloudflare r2",
+		"r2",
+		"r2 storage",
+		"drive",
+		"google drive",
+		"ui",
+		"cf",
+		"typescript",
+		"npm",
+		"package",
+		"cjs",
+		"esm",
+		"umd",
+		"typed"
+	],
+	"author": "Gabriel Massadas",
+	"license": "MIT",
+	"homepage": "https://r2explorer.com",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/G4brym/R2-Explorer.git"
+	},
+	"bugs": {
+		"url": "https://github.com/G4brym/R2-Explorer/issues"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.10.11",
+		"@cloudflare/workers-types": "^4.20251128.0",
+		"@types/node": "^24.10.1",
+		"@vitest/coverage-istanbul": "^3.2.4",
+		"hono": "^4.10.7",
+		"publint": "^0.3.17",
+		"tsup": "^8.5.1",
+		"typescript": "^5.9.3",
+		"vitest": "^3.2.4",
+		"wrangler": "^4.51.0"
+	},
+	"dependencies": {
+		"@hono/cloudflare-access": "^0.3.1",
+		"chanfana": "^2.8.3",
+		"postal-mime": "^2.6.1",
+		"zod": "^3.25.76"
+	}
+}
