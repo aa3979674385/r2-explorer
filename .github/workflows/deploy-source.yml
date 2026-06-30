@@ -32,7 +32,10 @@ jobs:
         run: pnpm build-dashboard
 
       - name: Build worker
-        run: cd packages/worker && npx tsup src/index.ts --format cjs,esm
+        run: |
+          cd packages/worker
+          npx tsup src/index.ts --format cjs,esm
+          cp -R ../dashboard/dist/spa dashboard/
 
       - name: Create worker entry
         run: |
